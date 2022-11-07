@@ -1,15 +1,18 @@
 #include "BankAccount.h"
 
 //Initialize counter
-int BankAccount::counter = 1;
+int BankAccount::counter = 0;
 
 //Parametrized Constructor
 BankAccount::BankAccount(double new_Value) {
     this->balance = new_Value;
+    ++counter;
 }
 
 //Default Constructor
-BankAccount::BankAccount() : balance(0) {}
+BankAccount::BankAccount() : balance(0) {
+    ++counter;
+}
 
 //ID getter
 string BankAccount::get_account_ID() {

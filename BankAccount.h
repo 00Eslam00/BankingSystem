@@ -10,7 +10,7 @@ using namespace std;
 class BankAccount {
 protected:
     static int counter;
-    string account_ID = "FCAI - ";
+    string account_ID = "FCAI-";
     double balance;
 public:
     BankAccount(double new_Value);
@@ -23,9 +23,9 @@ public:
 
     void set_balance(double new_value);
 
-    double withdraw();
+    virtual double withdraw();
 
-    double deposit();
+    virtual double deposit();
 
 };
 
