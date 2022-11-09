@@ -1,10 +1,13 @@
-#include "SavingBankAccount.h"
+#include "BankingApplication.h"
+
+
 
 SavingBankAccount::SavingBankAccount(double new_value, int minbalance) {
     while (new_value < minbalance) {
         cout << "Enter Balance greater than the minimum balance\n";
         cin >> new_value >> minbalance;
     }
+
     this->balance = new_value;
     this->minimumBalance = minbalance;
     cout << "Thank you.\n";
@@ -51,4 +54,3 @@ double SavingBankAccount::deposit() {
     cout << "Account ID: " << get_account_ID() << endl;
     cout << "New Balance: " << get_balance() << endl;
 }
-

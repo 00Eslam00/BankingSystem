@@ -1,4 +1,4 @@
-#include "BankAccount.h"
+#include "BankingApplication.h"
 
 //Initialize counter
 int BankAccount::counter = 0;
@@ -7,31 +7,37 @@ int BankAccount::counter = 0;
 BankAccount::BankAccount(double new_Value) {
     this->balance = new_Value;
     ++counter;
+    order = counter;
 }
 
 //Default Constructor
 BankAccount::BankAccount() : balance(0) {
     ++counter;
+    order = counter;
+    basic = true;
 }
 
 //ID getter
 string BankAccount::get_account_ID() {
-    return (account_ID + to_string(counter));
+    return (account_ID + to_string(order));
 }
 
 //Balance getter
-double BankAccount::get_balance() {
-    return balance;
+double &BankAccount::get_balance() {
+    return this->balance;
 }
 
 //Balance setter
-void BankAccount::set_balance(long long new_value) {
+void BankAccount::set_balance(double new_value) {
     this->balance = new_value;
 }
 
 //Withdraw Function
 double BankAccount::withdraw() {
     double amount;
+    cout << "Account ID: " << this->get_account_ID() << endl;
+    cout << "Acocunt Type: " << (this->getState() ? "Basic" : "Saving") << endl;
+    cout << "Balance: " << this->get_balance() << endl;
     cout << "Please Enter The Amount to Withdraw =========> ";
     cin >> amount;
     while (balance - amount < 0) {
@@ -39,11 +45,11 @@ double BankAccount::withdraw() {
         cout << "Please Enter The Amount to Withdraw =========> ";
         cin >> amount;
     }
-    balance -= amount;
+    this->balance -= amount;
     cout << "Thank you.\n";
     cout << "Account ID: " << get_account_ID() << endl;
     cout << "New Balance: " << get_balance() << endl;
-
+    return amount;
 }
 
 //Deposit Function
@@ -55,6 +61,7 @@ double BankAccount::deposit() {
     cout << "Thank you.\n";
     cout << "Account ID: " << get_account_ID() << endl;
     cout << "New Balance: " << get_balance() << endl;
+    return amount;
 }
 
 //setClient to Account
@@ -92,52 +99,58 @@ string BankAccount::getAdd() {
     return this->itsAccount->getAddress();
 }
 
+bool BankAccount::getState() {
+    return basic;
+}
+
+
+//---------------------------------------------------------------------------------------------------------
 //setName to client by set function
-void client::setName(string Name){
+void client::setName(string Name) {
     this->name = Name;
 }
 
 //setAddress to client by set function
-void client::setAddress(string Address){
+void client::setAddress(string Address) {
     this->address = Address;
 }
 
 //setPhoneNumber to client by set function
-void client::setPhoneNumber(string PhoneNum){
+void client::setPhoneNumber(string PhoneNum) {
     this->phoneNum = PhoneNum;
 }
 
 //set Account to Client
-void client::setBankAccount(BankAccount *ptrClint){
+void client::setBankAccount(BankAccount *ptrClint) {
     this->itsClient = ptrClint;
 }
 
 //getClientAccount_id by client pointer
-string client::getAccount_Id(){
+string client::getAccount_Id() {
     return (this->itsClient->get_account_ID());
 }
 
 //getClientName by client pointer
-string client::getName(){
+string client::getName() {
     return (this->name);
 }
 
 //getClientAddress by client pointer
-string client::getAddress(){
+string client::getAddress() {
     return (this->address);
 }
 
 //getClientPhoneNumber by client pointer
-string client::getPhoneNum(){
+string client::getPhoneNum() {
     return (this->phoneNum);
 }
 
 //getClientBalance by client pointer
-double client::getBalance(){
+double client::getBalance() {
     return (this->itsClient->get_balance());
 }
 
 //setClientBalance by client pointer
-void client::setBalance(double new_value){
+void client::setBalance(double new_value) {
     this->itsClient->set_balance(new_value);
 }
