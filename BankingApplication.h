@@ -5,6 +5,8 @@
 #include <string>
 #include <fstream>
 #include <vector>
+#include <sstream>
+
 
 using namespace std;
 
@@ -14,8 +16,20 @@ class BankAccount;
 
 class BankingApplication {
 private:
-    vector<pair<client, BankAccount>> users;
+    vector<pair<client, BankAccount *>> users;
+
+    void setData();
+
+    void getData();
+
+    void createData();
+
 public:
+    BankingApplication() {
+        createData();
+        getData();
+    }
+
     void run();
 
     void createaccount();
@@ -24,7 +38,7 @@ public:
 
     void Withdraw();
 
-    void deposit();
+    void Deposit();
 };
 
 
@@ -35,44 +49,34 @@ protected:
     int order;
     string account_ID = "FCAI-";
     double balance;
-    client *itsAccount;
 public:
     BankAccount(double new_Value);
 
+    friend class SavingBankAccount;
+
     BankAccount();
 
-    string get_account_ID();
+    string getId();
 
-    double &get_balance();
+    void setId(string id);
 
-    void set_balance(double new_value);
+    double getBalance();
 
-    virtual double withdraw();
+    void setBalance(double &new_value);
 
-    virtual double deposit();
+    virtual void withdraw();
 
-    void setNm(string nm);
-
-    void setAdd(string add);
-
-    void setPhn(string phn);
-
-    void setClient(client *Client);
+    virtual void deposit();
 
     bool getState();
 
-    string getNm();
-
-    string getAdd();
-
-    string getPhn();
+    void setState(bool b);
 
 };
 
 class client {
 private:
     string name, address, phoneNum;
-    BankAccount *itsClient;
 public:
     void setName(string Name);
 
@@ -80,19 +84,11 @@ public:
 
     void setPhoneNumber(string PhoneNum);
 
-    void setBankAccount(BankAccount *ptrClint);
+    string &getName();
 
-    void setBalance(double new_value);
+    string &getAddress();
 
-    string getAccount_Id();
-
-    double getBalance();
-
-    string getName();
-
-    string getAddress();
-
-    string getPhoneNum();
+    string &getPhoneNum();
 };
 
 class SavingBankAccount : public BankAccount {
@@ -107,11 +103,13 @@ public:
 
     int get_minimum();
 
+    friend class BankAccount;
+
     void set_minBalance(int);
 
-    double withdraw();
+    virtual void withdraw();
 
-    double deposit();
+    virtual void deposit();
 };
 
 

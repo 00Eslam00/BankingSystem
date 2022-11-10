@@ -1,18 +1,21 @@
 #include "BankingApplication.h"
 
 
-
 SavingBankAccount::SavingBankAccount(double new_value, int minbalance) {
+    basic = false;
     while (new_value < minbalance) {
         cout << "Enter Balance greater than the minimum balance\n";
-        cin >> new_value >> minbalance;
+        minimumBalance = minbalance;
+        cout << "Min Balance: " << get_minimum() << endl;
+        cin >> new_value;
     }
-
     this->balance = new_value;
     this->minimumBalance = minbalance;
     cout << "Thank you.\n";
-    cout << "Account ID: " << get_account_ID() << endl;
-    cout << "New Balance: " << get_balance() << endl;
+    cout << "Account ID: " << getId() << endl;
+    cout << "Account type: " << (getState() ? " (Basic)" : " (Saving)") << endl;
+    cout << "New Balance: " << getBalance() << endl;
+    cout << "Min Balance: " << get_minimum() << endl;
 
 }
 
@@ -21,26 +24,26 @@ int SavingBankAccount::get_minimum() {
 }
 
 void SavingBankAccount::set_minBalance(int x) {
-    this->minimumBalance = x;
+    minimumBalance = x;
 }
 
-double SavingBankAccount::withdraw() {
+void SavingBankAccount::withdraw() {
     double amount;
     cout << "Please Enter The Amount to Withdraw not less than Minimum Balance =========> ";
     cin >> amount;
     while (amount < minimumBalance) {
-        cout << "Sorry. This is more than what you can withdraw.\n";
+        cout << "Sorry. This is less than what you can withdraw.\n";
         cout << "Please Enter The Amount to Withdraw not less than Minimum Balance =========> ";
         cin >> amount;
     }
     balance -= amount;
     cout << "Thank you.\n";
-    cout << "Account ID: " << get_account_ID() << endl;
-    cout << "New Balance: " << get_balance() << endl;
+    cout << "Account ID: " << getId() << endl;
+    cout << "New Balance: " << getBalance() << endl;
 
 }
 
-double SavingBankAccount::deposit() {
+void SavingBankAccount::deposit() {
     double amount;
     cout << "Please Enter The Amount to Deposit (Greater Than 100 L.E.) =========> ";
     cin >> amount;
@@ -51,6 +54,6 @@ double SavingBankAccount::deposit() {
     }
     balance += amount;
     cout << "Thank you.\n";
-    cout << "Account ID: " << get_account_ID() << endl;
-    cout << "New Balance: " << get_balance() << endl;
+    cout << "Account ID: " << getId() << endl;
+    cout << "New Balance: " << getBalance() << endl;
 }
